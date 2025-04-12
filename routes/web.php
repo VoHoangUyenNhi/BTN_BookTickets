@@ -49,4 +49,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+//Thu Thủy
+Route::get('/search-ticket', [App\Http\Controllers\BookTicketController::class, 'searchTrips'])->name('search_ticket');
+Route::get('/dat-ve/{maChuyenDi}', [DatVeController::class, 'index'])->name('dat-ve');
+
 require __DIR__.'/auth.php';
