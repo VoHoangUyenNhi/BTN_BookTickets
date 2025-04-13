@@ -42,17 +42,7 @@
                     <label for="ngayve">Ngày về</label>
                     <input id="ngayve" name="ngayve" type="date" class="form-control"
                         value="{{ old('ngayve', request('ngayve')) }}">
-                </div>
-
-                <!-- Loại vé -->
-                <div class="form-group">
-                    <label for="loaive">Loại vé</label>
-                    <select id="loaive" name="loaive" class="form-control">
-                        <option value="motchieu" {{ request('loaive') == 'motchieu' ? 'selected' : '' }}>Một chiều</option>
-                        <option value="khuhoi" {{ request('loaive') == 'khuhoi' ? 'selected' : '' }}>Khứ hồi</option>
-                    </select>
-                </div>           
-
+                </div>         
                 <!-- Nút tìm -->
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Tìm chuyến</button>
