@@ -25,19 +25,6 @@ Route::get('/', function ()- {
     ]);
 });
 */
-//Tạo cập nhật thông tin người dùng
-Route::get('/accountpanel','App\Http\Controllers\AccountController@accountpanel')
-->middleware('auth')->name("account");
-
-Route::post('/saveaccountinfo','App\Http\Controllers\AccountController@saveaccountinfo')
-->middleware('auth')->name('saveinfo');
-
-//TRANG CHỦ INDEX
-Route::get('/', 'App\Http\Controllers\BookTicketController@index');
-
-
-
-Route::get('/search-ticket', [TicketController::class, 'search'])->name('search_ticket');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -50,3 +37,20 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+// Uyên Nhi
+//TRANG CHỦ INDEX
+Route::get('/', 'App\Http\Controllers\BookTicketController@index');
+
+Route::get('/search-ticket', [BookTicketController::class, 'search'])->name('search_ticket');
+
+//Tạo cập nhật thông tin người dùng
+Route::get('/account','App\Http\Controllers\AccountController@account')
+->middleware('auth')->name("account");
+// Xem thông tin
+Route::get('/profileinfo','App\Http\Controllers\AccountController@profileinfo')
+->middleware('auth')->name("profileinfo");
+// Lưu lại thông tin đã cập nhật
+Route::post('/saveaccountinfo','App\Http\Controllers\AccountController@saveaccountinfo')
+->middleware('auth')->name('saveinfo');
+

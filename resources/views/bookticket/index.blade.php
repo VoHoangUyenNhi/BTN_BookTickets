@@ -42,28 +42,7 @@
                     <label for="ngayve">Ngày về</label>
                     <input id="ngayve" name="ngayve" type="date" class="form-control"
                         value="{{ old('ngayve', request('ngayve')) }}">
-                </div>
-
-                <!-- Loại vé -->
-                <div class="form-group">
-                    <label for="loaive">Loại vé</label>
-                    <select id="loaive" name="loaive" class="form-control">
-                        <option value="motchieu" {{ request('loaive') == 'motchieu' ? 'selected' : '' }}>Một chiều</option>
-                        <option value="khuhoi" {{ request('loaive') == 'khuhoi' ? 'selected' : '' }}>Khứ hồi</option>
-                    </select>
-                </div>           
-
-                <!-- Sắp xếp -->
-                <div class="form-group">
-                    <label for="sapxep">Sắp xếp theo:</label>
-                    <select id="sapxep" name="sapxep" class="form-control">
-                        <option value="gia_asc" {{ request('sapxep') == 'gia_asc' ? 'selected' : '' }}>Giá tăng dần</option>
-                        <option value="gia_desc" {{ request('sapxep') == 'gia_desc' ? 'selected' : '' }}>Giá giảm dần</option>
-                        <option value="thoi_gian_asc" {{ request('sapxep') == 'thoi_gian_asc' ? 'selected' : '' }}>Giờ đi sớm nhất</option>
-                        <option value="thoi_gian_desc" {{ request('sapxep') == 'thoi_gian_desc' ? 'selected' : '' }}>Giờ đi muộn nhất</option>
-                    </select>
-                </div>  
-
+                </div>         
                 <!-- Nút tìm -->
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Tìm chuyến</button>
