@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-
+use App\Http\Controllers\BookTicketController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -48,5 +48,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+Route::get('/tracuuve', [BookTicketController::class, 'showForm']);
+Route::post('/tracuuve', [BookTicketController::class, 'searchTicket'])->name('tracuuve');
+
 
 require __DIR__.'/auth.php';
