@@ -49,4 +49,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::post('/send-ticket-email', [BookTicketController::class, 'sendEmail'])->name('send.ticket.email')->middleware('auth');
 require __DIR__.'/auth.php';
+
+
+
+
