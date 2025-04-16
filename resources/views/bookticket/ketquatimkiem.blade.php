@@ -27,13 +27,6 @@
             <td>{{ $trip->TenLoTrinh }}</td>
             <td>{{ $trip->ThoiGianKhoiHanh }}</td>
             <td>{{ $trip->TenLoaiXe }}</td>
-            <td>{{ number_format($trip->GiaNgayThuong, 0, ',', '.') }} VND</td> 
-            <td>{{ $trip->SoGheTrong }}</td>
-            <td>
-            <a href="{{ route('bookticket.seat_selection', ['maChuyenDi' => $trip->MaChuyenDi]) }}" class="btn btn-primary btn-sm">Chọn ghế</a>               </td>
-        </tr>
-        @endforeach
-    </tbody>
-</table>
+        
     @endif
 </x-book-ticket-layout>

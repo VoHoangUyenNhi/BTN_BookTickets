@@ -5,17 +5,32 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 class AccountController extends Controller
 {
-function accountpanel()
+
+// Xem thông tin tài khoản
+function profileinfo()
 {
 $user = DB::table("users")->whereRaw("id=?",[Auth::user()->id])->first();
-return view("quanlydatve.account",compact("user"));
+return view("bookticket.profile",compact("user"));
 }
+
+// Chỉnh sửa lại thông tin
+public function account()
+{
+    $user = DB::table("users")->where("id", Auth::id())->first();
+    return view("bookticket.account", compact("user"));
+}
+
+// Lưu thông tin
 function saveaccountinfo(Request $request)
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
-            'phone' => ['nullable', 'string']
+            'phone' => ['nullable', 'string'],
+            'photo' => ['nullable','image'],
+            'date' => ['nullable','date'],
+            'gender' => ['nullable', 'in:Nam,Nữ,Khác'],  // chỉ cho phép 3 giá trị
+            'career' => ['nullable', 'string', 'max:255']
         ]);
 
         $id = $request->input('id');
@@ -30,7 +45,9 @@ function saveaccountinfo(Request $request)
             $request->file('photo')->storeAs('public/profile', $fileName);
             $data['photo'] = $fileName;
         }
-
+        $data["date"] = $request->input("date");
+        $data["gender"] = $request->input("gender");
+        $data["career"] = $request-> input("career");
         DB::table("users")->where("id", $id)->update($data);
 
         return redirect()->route('account')->with('status', 'Cập nhật thành công');

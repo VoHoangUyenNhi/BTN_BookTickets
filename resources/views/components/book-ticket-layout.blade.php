@@ -66,7 +66,7 @@
                     <div class='col-9 p-0'>
                             <ul class="navbar-nav">
                                 <li class="nav-item active">
-                                    <a class="nav-link" href="{{url('bookticket')}}">Trang chủ</a>
+                                    <a class="nav-link" href="{{url('/')}}">Trang chủ</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Tra cứu vé</a>
@@ -86,7 +86,7 @@
                                 {{ Auth::user()->name }}
                             </button>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="{{ route('account') }}">Quản lý</a>
+                                <a class="dropdown-item" href="{{ route('profileinfo') }}">Hồ sơ</a>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
                                     <a class="dropdown-item" href="#" onclick="event.preventDefault(); this.closest('form').submit();">Đăng xuất</a>
