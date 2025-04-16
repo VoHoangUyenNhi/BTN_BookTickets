@@ -30,8 +30,7 @@
             <td>{{ number_format($trip->GiaNgayThuong, 0, ',', '.') }} VND</td> 
             <td>{{ $trip->SoGheTrong }}</td>
             <td>
-                <a href="{{ route('dat-ve', ['maChuyenDi' => $trip->MaChuyenDi]) }}" class="btn btn-primary">Đặt vé</a>
-            </td>
+            <a href="{{ route('bookticket.seat_selection', ['maChuyenDi' => $trip->MaChuyenDi]) }}" class="btn btn-primary btn-sm">Chọn ghế</a>               </td>
         </tr>
         @endforeach
     </tbody>

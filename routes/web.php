@@ -4,7 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\BookingController;
+use App\Http\Controllers\BookTicketController;
+use App\Http\Controllers\AccountController;
 
 
 /*
@@ -18,7 +19,7 @@ use App\Http\Controllers\BookingController;
 |
 */
 /*
-Route::get('/', function ()- {
+Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
@@ -35,7 +36,7 @@ Route::post('/saveaccountinfo','App\Http\Controllers\AccountController@saveaccou
 ->middleware('auth')->name('saveinfo');
 
 //TRANG CHỦ INDEX
-Route::get('/', 'App\Http\Controllers\BookTicketController@index');
+Route::get('/', [BookTicketController::class, 'index'])->name('home');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -49,26 +50,25 @@ Route::middleware('auth')->group(function () {
 
 //Thu Thủy
 Route::get('/search-ticket', [App\Http\Controllers\BookTicketController::class, 'searchTrips'])->name('search_ticket');
+// Trong routes/web.php
+
+// Anh Thu
+Route::get('/chon_ghe/{maChuyenDi}', [BookTicketController::class, 'showSeatSelection'])
+    ->where('maChuyenDi', '[0-9]+') // Đảm bảo maChuyenDi là số
+    ->name('bookticket.seat_selection');
+// ROUTE NÀY: Xử lý POST từ trang chọn ghế ***
+Route::post('/xu-ly-chon-ghe', [BookTicketController::class, 'processSeatSelection'])
+    ->name('bookticket.process_booking'); // Giữ nguyên name từ action của form
+
+// ROUTE NÀY: Hiển thị trang xác nhận đặt vé ***
+Route::get('/xac-nhan-dat-ve', [BookTicketController::class, 'showConfirmationPage'])
+    ->name('bookticket.show_confirmation');
+    Route::post('/hoan-tat-dat-ve', [BookTicketController::class, 'finalizeBooking'])
+    ->name('bookticket.finalize'); // Đặt tên khớp với view
+// *** THÊM ROUTE NÀY: Hiển thị trang đặt vé thành công ***
+Route::get('/dat-ve-thanh-cong', [BookTicketController::class, 'showSuccessPage'])
+    ->name('bookticket.success');
+   
 
 
 require __DIR__.'/auth.php';
-
-// Anh Thu
-// --- Quy trình Đặt Vé (Do BookingController xử lý) ---
-Route::prefix('dat-ve')->name('dat-ve.')->group(function () {
-    // Bước 1: Hiển thị trang chọn ghế (GET)
-    Route::get('/chon-ghe/{maChuyenDi}', [BookingController::class, 'showSeatSelection'])->name('chon-ghe');
-
-    // Bước 2: Lưu ghế đã chọn & chuyển hướng (POST)
-    Route::post('/luu-ghe', [BookingController::class, 'storeSelectedSeats'])->name('luu-ghe');
-
-    // Bước 3: Hiển thị form nhập thông tin (GET)
-    Route::get('/chi-tiet', [BookingController::class, 'showCustomerDetailsForm'])->name('chi-tiet');
-
-    // Bước 4: Xử lý đặt vé, lưu DB & chuyển hướng (POST)
-    Route::post('/xac-nhan', [BookingController::class, 'processBooking'])->name('xac-nhan');
-
-    // Bước 5: Hiển thị trang thành công (GET)
-    Route::get('/thanh-cong', [BookingController::class, 'showSuccessPage'])->name('thanh-cong');
-});
-
