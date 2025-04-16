@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\BookTicketController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,3 +56,27 @@ Route::get('/profileinfo','App\Http\Controllers\AccountController@profileinfo')
 Route::post('/saveaccountinfo','App\Http\Controllers\AccountController@saveaccountinfo')
 ->middleware('auth')->name('saveinfo');
 
+//Thu Thủy
+Route::get('/search-ticket', [App\Http\Controllers\BookTicketController::class, 'searchTrips'])->name('search_ticket');
+
+// Anh Thu
+Route::get('/chon_ghe/{maChuyenDi}', [BookTicketController::class, 'showSeatSelection'])
+    ->where('maChuyenDi', '[0-9]+') // Đảm bảo maChuyenDi là số
+    ->name('bookticket.seat_selection');
+// ROUTE NÀY: Xử lý POST từ trang chọn ghế ***
+Route::post('/xu-ly-chon-ghe', [BookTicketController::class, 'processSeatSelection'])
+    ->name('bookticket.process_booking'); // Giữ nguyên name từ action của form
+
+// ROUTE NÀY: Hiển thị trang xác nhận đặt vé ***
+Route::get('/xac-nhan-dat-ve', [BookTicketController::class, 'showConfirmationPage'])
+    ->name('bookticket.show_confirmation');
+    Route::post('/hoan-tat-dat-ve', [BookTicketController::class, 'finalizeBooking'])
+    ->name('bookticket.finalize'); // Đặt tên khớp với view
+// *** THÊM ROUTE NÀY: Hiển thị trang đặt vé thành công ***
+Route::get('/dat-ve-thanh-cong', [BookTicketController::class, 'showSuccessPage'])
+    ->name('bookticket.success');
+ 
+Route::get('/tracuuve', [BookTicketController::class, 'showForm']);
+Route::post('/tracuuve', [BookTicketController::class, 'searchTicket'])->name('tracuuve');
+
+Route::post('/send-ticket-email', [BookTicketController::class, 'sendEmail'])->name('send.ticket.email')->middleware('auth');
